@@ -7,7 +7,7 @@ const clickedElement = [];
 
 
 function showCards (event) { 
-if ( countNum <= 2) {
+if ( countNum <= 2 && event.target !== event.currentTarget) {
 if (event.target.tagName === "DIV") {
 let child = event.target.querySelector("img"); 
 child.classList.add ("show");
