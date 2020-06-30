@@ -1,0 +1,41 @@
+
+#titlespot{
+    background-image: linear-gradient(to bottom, #73eda2, #00bbb7, #0084a9, #2e4e77, #2e2137);
+    padding-bottom: 5%;
+    cursor: pointer;
+}
+
+.titlecss {
+text-align: center;
+cursor: alias;
+}
+
+.options{
+    padding: 0 15% 3% 15% ;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 9em 9em 9em 9em;
+    gap: 0.5em;
+    justify-content: center;
+}
+
+.blackbox {
+    background-color: black;
+    height: 7em;
+    width: 7em; 
+    border: 10px white;
+}
+
+.pictures {
+    height: 7em;
+    width: 7em; 
+    visibility: hidden;
+}
+
+.show {
+    visibility: visible;
+}
