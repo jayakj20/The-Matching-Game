@@ -1,34 +1,72 @@
 const container = document.querySelector(".container");
-const blackbox = document.getElementsByClassName ("blackbox");
-let countNum = 0; 
+const blackbox = document.querySelectorAll(".pictures");
+const moves = document.querySelector(".moves");
+const timeElapsed = document.querySelector(".TimeElapsed");
+let countNum = 0;
 const clickedElement = [];
+var time = 0;
+var elementisClicked = false;
 
-/* event.target.classList.remove ("show"); */ // to hide cards again
 
 
-function showCards (event) { 
-if ( countNum <= 2 && event.target !== event.currentTarget) {
-if (event.target.tagName === "DIV") {
-let child = event.target.querySelector("img"); 
-child.classList.add ("show");
-clickedElement.push (child); 
-console.log(clickedElement);
-countNum++; 
-if (countNum === 2) {
-if (clickedElement[0].getAttribute('alt') === clickedElement[1].getAttribute('alt')) {
-    for(var i=1; i>=0; i--) {
-        clickedElement.splice(i, 1);
-} countNum = 0; 
-} else {
-for(var i=1; i>=0; i--) {
-    clickedElement[i].classList.remove ("show");
-    clickedElement.splice(i,1); 
-} countNum =0; 
-} 
+function setTime() {
+    ++time;
+    timeElapsed.innerHTML = "Time Elapsed: " + pad(parseInt(time / 60)) + " " + pad(time % 60);
 }
+
+function pad(val) {
+    var valString = val + "";
+    if (valString.length < 2) {
+        return "0" + valString;
+    } else {
+        return valString;
+    }
 }
+
+function checkGameDone() {
+    var count = 0;
+    blackbox.forEach(function (index) {
+        if (index.classList.contains("show")) {
+            count++;
+            console.log(count);
+        }
+    });
+    if (count === 15) {
+        return true;
+    } else { return false; };
+
 }
+
+function showCards(event) {
+    if (!checkGameDone()) {
+        if (countNum <= 2 && event.target !== event.currentTarget) {
+            if (event.target.tagName === "DIV") {
+                let child = event.target.querySelector("img");
+                child.classList.add("show");
+                clickedElement.push(child);
+                console.log(clickedElement);
+                countNum++;
+                if (countNum === 2) {
+                    if (clickedElement[0].getAttribute('alt') === clickedElement[1].getAttribute('alt')) {
+                        for (var i = 1; i >= 0; i--) {
+                            clickedElement.splice(i, 1);
+                        } countNum = 0;
+                    } else {
+                        for (var i = 1; i >= 0; i--) {
+                            clickedElement[i].classList.remove("show");
+                            clickedElement.splice(i, 1);
+                        } countNum = 0;
+                    }
+                }
+            }
+        }
+    }else {
+        blackbox.forEach(function (index) {
+            index.classList.remove ("show");
+        })
+    }
 }
 
 //Event Listeners
 container.addEventListener("click", showCards);
+
