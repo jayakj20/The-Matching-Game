@@ -1,8 +1,11 @@
 const container = document.querySelector(".container");
 const blackbox = document.querySelectorAll(".pictures");
-const moves = document.querySelector(".moves");
+const moves = document.getElementById("moves");
 const timeElapsed = document.querySelector(".TimeElapsed");
+const startButton = document.getElementById("startButton");
+const restartButton = document.getElementById('restartGame')
 let countNum = 0;
+let movesCounter = 0;
 const clickedElement = [];
 var time = 0;
 var elementisClicked = false;
@@ -23,6 +26,10 @@ function pad(val) {
     }
 }
 
+function startTime() {
+    setInterval(setTime, 1000);
+}
+
 function checkGameDone() {
     var count = 0;
     blackbox.forEach(function (index) {
@@ -41,6 +48,8 @@ function showCards(event) {
     if (!checkGameDone()) {
         if (countNum <= 2 && event.target !== event.currentTarget) {
             if (event.target.tagName === "DIV") {
+                movesCounter++;
+                moves.innerHTML = "Moves: " + movesCounter;
                 let child = event.target.querySelector("img");
                 child.classList.add("show");
                 clickedElement.push(child);
@@ -60,13 +69,26 @@ function showCards(event) {
                 }
             }
         }
-    }else {
+    } else {
+        alert ("Congratulations! You have matched all the Avengers!");
         blackbox.forEach(function (index) {
-            index.classList.remove ("show");
+            index.classList.remove("show");
         })
+        movesCounter = 0;
+        moves.innerHTML = "Moves: " + movesCounter;
     }
+}
+
+function restartGame() {
+    blackbox.forEach(function (index) {
+        index.classList.remove("show");
+    })
+    movesCounter = 0;
+    moves.innerHTML = "Moves: " + movesCounter;
 }
 
 //Event Listeners
 container.addEventListener("click", showCards);
+startButton.addEventListener("click", startTime);
+restartButton.addEventListener("click", restartGame);
 
