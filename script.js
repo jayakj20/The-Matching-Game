@@ -8,7 +8,6 @@ let countNum = 0;
 let movesCounter = 0;
 const clickedElement = [];
 var time = 0;
-var elementisClicked = false;
 
 
 
@@ -27,7 +26,11 @@ function pad(val) {
 }
 
 function startTime() {
-    setInterval(setTime, 1000);
+    if (!checkGameDone()) {
+        setInterval(setTime, 1000);
+    } else {
+        timeElapsed.innerHTML = "Time Elapsed: 0";
+    }
 }
 
 function checkGameDone() {
@@ -46,38 +49,37 @@ function checkGameDone() {
 
 function showCards(event) {
     if (!checkGameDone()) {
-        if (countNum <= 2 && event.target !== event.currentTarget) {
+        if (countNum < 2 && event.target !== event.currentTarget) {
             if (event.target.tagName === "DIV") {
                 movesCounter++;
                 moves.innerHTML = "Moves: " + movesCounter;
+                countNum++;
                 let child = event.target.querySelector("img");
                 child.classList.add("show");
                 clickedElement.push(child);
                 console.log(clickedElement);
-                countNum++;
                 if (countNum === 2) {
                     if (clickedElement[0].getAttribute('alt') === clickedElement[1].getAttribute('alt')) {
                         for (var i = 1; i >= 0; i--) {
                             clickedElement.splice(i, 1);
                         } countNum = 0;
                     } else {
-                        for (var i = 1; i >= 0; i--) {
-                            clickedElement[i].classList.remove("show");
-                            clickedElement.splice(i, 1);
-                        } countNum = 0;
+                        setTimeout(function () {
+                            for (var i = 1; i >= 0; i--) {
+                                clickedElement[i].classList.remove("show");
+                                clickedElement.splice(i, 1);
+                            } countNum = 0;
+                        }, 1000); 
                     }
                 }
             }
+        } 
+        }else {
+            alert("Congratulations! You have matched all the Avengers!");
+            restartGame();
+
         }
-    } else {
-        alert ("Congratulations! You have matched all the Avengers!");
-        blackbox.forEach(function (index) {
-            index.classList.remove("show");
-        })
-        movesCounter = 0;
-        moves.innerHTML = "Moves: " + movesCounter;
     }
-}
 
 function restartGame() {
     blackbox.forEach(function (index) {
@@ -91,4 +93,3 @@ function restartGame() {
 container.addEventListener("click", showCards);
 startButton.addEventListener("click", startTime);
 restartButton.addEventListener("click", restartGame);
-
