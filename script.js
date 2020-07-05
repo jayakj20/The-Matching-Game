@@ -8,7 +8,7 @@ let countNum = 0;
 let movesCounter = 0;
 const clickedElement = [];
 var time = 0;
-
+var timeStart = true;
 
 
 function setTime() {
@@ -26,11 +26,8 @@ function pad(val) {
 }
 
 function startTime() {
-    if (!checkGameDone()) {
-        setInterval(setTime, 1000);
-    } else {
-        timeElapsed.innerHTML = "Time Elapsed: 0";
-    }
+
+    setInterval(setTime, 1000);
 }
 
 function checkGameDone() {
@@ -48,7 +45,11 @@ function checkGameDone() {
 }
 
 function showCards(event) {
-    if (!checkGameDone()) {
+if (timeStart) {
+    startTime ();
+}
+timeStart = false; 
+ if (!checkGameDone()) {
         if (countNum < 2 && event.target !== event.currentTarget) {
             if (event.target.tagName === "DIV") {
                 movesCounter++;
@@ -87,9 +88,11 @@ function restartGame() {
     })
     movesCounter = 0;
     moves.innerHTML = "Moves: " + movesCounter;
+    timeElapsed.innerHTML = "Time Elapsed: ";
+    timeStart = true;
+    time = 0;
 }
 
 //Event Listeners
 container.addEventListener("click", showCards);
-startButton.addEventListener("click", startTime);
 restartButton.addEventListener("click", restartGame);
