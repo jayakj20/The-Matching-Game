@@ -9,6 +9,7 @@ let movesCounter = 0;
 const clickedElement = [];
 var time = 0;
 var timeStart = true;
+var interval;
 
 
 function setTime() {
@@ -25,10 +26,6 @@ function pad(val) {
     }
 }
 
-function startTime() {
-
-    setInterval(setTime, 1000);
-}
 
 function checkGameDone() {
     var count = 0;
@@ -39,17 +36,17 @@ function checkGameDone() {
         }
     });
     if (count === 15) {
-        return true;
+     return true;
     } else { return false; };
 
 }
 
 function showCards(event) {
-if (timeStart) {
-    startTime ();
-}
-timeStart = false; 
- if (!checkGameDone()) {
+    if (timeStart) {
+         interval = setInterval(setTime, 1000);
+    }
+    timeStart = false;
+    if (!checkGameDone()) {
         if (countNum < 2 && event.target !== event.currentTarget) {
             if (event.target.tagName === "DIV") {
                 movesCounter++;
@@ -70,17 +67,17 @@ timeStart = false;
                                 clickedElement[i].classList.remove("show");
                                 clickedElement.splice(i, 1);
                             } countNum = 0;
-                        }, 1000); 
+                        }, 1000);
                     }
                 }
             }
-        } 
-        }else {
-            alert("Congratulations! You have matched all the Avengers!");
-            restartGame();
-
         }
+    } else {
+        alert("Congratulations! You have matched all the Avengers!");
+        restartGame();
+
     }
+}
 
 function restartGame() {
     blackbox.forEach(function (index) {
@@ -88,9 +85,10 @@ function restartGame() {
     })
     movesCounter = 0;
     moves.innerHTML = "Moves: " + movesCounter;
+    clearInterval(interval);
     timeElapsed.innerHTML = "Time Elapsed: ";
-    timeStart = true;
     time = 0;
+    timeStart = true;
 }
 
 //Event Listeners
