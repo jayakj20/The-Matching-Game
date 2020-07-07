@@ -1,16 +1,15 @@
+// Variable Declarations
 const container = document.querySelector(".container");
 const blackbox = document.querySelectorAll(".pictures");
 const moves = document.getElementById("moves");
 const timeElapsed = document.querySelector(".TimeElapsed");
-const startButton = document.getElementById("startButton");
 const restartButton = document.getElementById('restartGame')
 let countNum = 0;
 let movesCounter = 0;
 const clickedElement = [];
-var time = 0;
-var timeStart = true;
-var interval;
-
+let time = 0; 
+let timeStart = true;
+let interval;
 
 function setTime() {
     ++time;
@@ -26,7 +25,6 @@ function pad(val) {
     }
 }
 
-
 function checkGameDone() {
     var count = 0;
     blackbox.forEach(function (index) {
@@ -41,6 +39,8 @@ function checkGameDone() {
 
 }
 
+/* Event Handler for clicks on images, contains logic to enable css property 
+ visible to show cards and  if matching keep as show otherwise hide */
 function showCards(event) {
     if (timeStart) {
          interval = setInterval(setTime, 1000);
@@ -55,7 +55,6 @@ function showCards(event) {
                 let child = event.target.querySelector("img");
                 child.classList.add("show");
                 clickedElement.push(child);
-                console.log(clickedElement);
                 if (countNum === 2) {
                     if (clickedElement[0].getAttribute('alt') === clickedElement[1].getAttribute('alt')) {
                         for (var i = 1; i >= 0; i--) {
@@ -79,6 +78,7 @@ function showCards(event) {
     }
 }
 
+//Logic to restart game, when the restart button is pressed
 function restartGame() {
     blackbox.forEach(function (index) {
         index.classList.remove("show");
