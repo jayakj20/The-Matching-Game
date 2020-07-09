@@ -94,3 +94,44 @@ function restartGame() {
 //Event Listeners
 container.addEventListener("click", showCards);
 restartButton.addEventListener("click", restartGame);
+
+
+// Object to hold all images
+const avengers = [
+    {
+        alt = "black widow",
+        src = "images/bw.png"
+    },
+    {
+        alt = "captain america",
+        src = "images/ca.png"
+    },
+    
+    {
+        alt = "hulk",
+        src = "images/hulk.png"
+    },
+    
+    {
+        alt = "thanos",
+        src = "images/thanos.png"
+    },
+    {
+        alt = "thor",
+        src = "images/thor.png"
+    },
+    {
+        alt = "hawkeye",
+        src = "images/hawkeye.png"
+    },
+        
+    {
+        alt = "spiderman",
+        src = "images/spidey.png"
+    },
+        
+    {
+        alt = "shazam",
+        src = "images/shazam.png"
+    }    
+]; 
